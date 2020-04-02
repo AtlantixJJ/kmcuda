@@ -340,7 +340,7 @@ struct METRIC<kmcudaDistanceMetricDot, F> {
 
   FPATTR static typename HALF<F>::type distance(
       F sqr1 __attribute__((unused)), F sqr2 __attribute__((unused)), F prod) {
-    return _half<F>(prod);
+    return _half<F>(_float(_fin(prod)));
   }
 
   FPATTR static float distance(const F *__restrict__ v1, const F *__restrict__ v2) {
