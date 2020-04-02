@@ -78,7 +78,8 @@ typedef enum {
   /// Measure the distance between dots using the angle between them.
   /// @note This metric requires all the supplied data to be normalized by L2 to 1.
   kmcudaDistanceMetricCosine,
-  kmcudaDistanceMetricDot
+  kmcudaDistanceMetricDot,
+  kmcudaDistanceMetricNormDot
 } KMCUDADistanceMetric;
 
 #ifdef __cplusplus
