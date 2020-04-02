@@ -12,9 +12,9 @@
 #include "kmcuda.h"
 
 static char module_docstring[] =
-    "This module provides fast K-means implementation which uses CUDA.";
+    "This module provides fast K-means implementation which uses CUDA. Modified to have dot similarity.";
 static char kmeans_cuda_docstring[] =
-    "Assigns cluster label to each sample and calculates cluster centers.";
+    "Assigns cluster label to each sample and calculates cluster centers. Modified to have dot similarity.";
 static char knn_cuda_docstring[] =
     "Finds the nearest neighbors for every sample.";
 
