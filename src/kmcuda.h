@@ -182,7 +182,8 @@ const std::unordered_map<std::string, KMCUDADistanceMetric> metrics {
     {"cos", kmcudaDistanceMetricCosine},
     {"cosine", kmcudaDistanceMetricCosine},
     {"angular", kmcudaDistanceMetricCosine},
-    {"dot", kmcudaDistanceMetricDot}
+    {"dot", kmcudaDistanceMetricDot},
+    {"normdot", kmcudaDistanceMetricNormDot}
 };
 
 /// Mapping from KMCUDAResult to strings - useful for wrappers.
