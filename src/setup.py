@@ -85,7 +85,7 @@ class HackedSdist(sdist):
 setup(
     name="libKMCUDA",
     description="Accelerated K-means and K-nn on GPU",
-    version="6.2.3",
+    version="6.2.4",
     license="Apache Software License",
     author="Vadim Markovtsev",
     author_email="vadim@sourced.tech",
