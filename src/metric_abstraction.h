@@ -353,7 +353,7 @@ struct METRIC<kmcudaDistanceMetricDot, F> {
       corr = _sub(yprod, _sub(tprod, prod));
       prod = tprod;
     }
-    return prod;
+    return _float(_fin(prod));
   }
 
   FPATTR static float distance_t(const F *__restrict__ v1, const F *__restrict__ v2,
@@ -367,7 +367,7 @@ struct METRIC<kmcudaDistanceMetricDot, F> {
       corr = _sub(yprod, _sub(tprod, prod));
       prod = tprod;
     }
-    return prod;
+    return _float(_fin(prod));
   }
 
   FPATTR static float distance_tt(const F *__restrict__ v, uint64_t size,
@@ -381,7 +381,7 @@ struct METRIC<kmcudaDistanceMetricDot, F> {
       corr = _sub(yprod, _sub(tprod, prod));
       prod = tprod;
     }
-    return prod;
+    return _float(_fin(prod));
   }
 
   FPATTR static float partial(const F *__restrict__ v1, const F *__restrict__ v2,
