@@ -306,6 +306,29 @@ template <typename F>
 struct METRIC<kmcudaDistanceMetricDot, F> {
   FPATTR static F sum_squares(
       const F *__restrict__ vec, F *__restrict__ cache) {
+    if (cache) {
+      #pragma unroll 4
+      for (int f = 0; f < d_features_size; f++) {
+        cache[f] = vec[f];
+      }
+    }
+    return _const<F>(1);
+  }
+
+  FPATTR static F sum_squares_t(
+      const F *__restrict__ vec, F *__restrict__ cache, uint64_t size, uint64_t index) {
+    if (cache) {
+      #pragma unroll 4
+      for (uint64_t f = 0; f < d_features_size; f++) {
+        cache[f] = vec[f * size + index];
+      }
+    }
+    return _const<F>(1);
+  }
+
+  /*
+  FPATTR static F sum_squares(
+      const F *__restrict__ vec, F *__restrict__ cache) {
     F ssqr = _const<F>(0), corr = _const<F>(0);
     #pragma unroll 4
     for (int f = 0; f < d_features_size; f++) {
@@ -337,6 +360,7 @@ struct METRIC<kmcudaDistanceMetricDot, F> {
     }
     return ssqr;
   }
+  */
 
   FPATTR static typename HALF<F>::type distance(
       F sqr1 __attribute__((unused)), F sqr2 __attribute__((unused)), F prod) {
