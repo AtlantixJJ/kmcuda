@@ -203,6 +203,15 @@ FOR_EACH_DEV(CUCH(cudaDeviceSynchronize(), kmcudaRuntimeError)); \
         f<kmcudaDistanceMetricCosine, half2>__VA_ARGS__; \
     } \
     break; \
+  case kmcudaDistanceMetricDot: \
+    if (!fp16x2) { \
+        using F = float; \
+        f<kmcudaDistanceMetricDot, float>__VA_ARGS__; \
+    } else { \
+        using F = half2; \
+        f<kmcudaDistanceMetricDot, half2>__VA_ARGS__; \
+    } \
+    break; \
 } } while(false)
 #else
 #define KERNEL_SWITCH(f, ...) do { switch (metric) { \
@@ -213,6 +222,10 @@ FOR_EACH_DEV(CUCH(cudaDeviceSynchronize(), kmcudaRuntimeError)); \
   case kmcudaDistanceMetricCosine: \
     using F = float; \
     f<kmcudaDistanceMetricCosine, float>__VA_ARGS__; \
+    break; \
+  case kmcudaDistanceMetricDot: \
+    using F = float; \
+    f<kmcudaDistanceMetricDot, float>__VA_ARGS__; \
     break; \
 } } while(false)
 #endif

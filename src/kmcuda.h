@@ -77,7 +77,8 @@ typedef enum {
   kmcudaDistanceMetricL2,
   /// Measure the distance between dots using the angle between them.
   /// @note This metric requires all the supplied data to be normalized by L2 to 1.
-  kmcudaDistanceMetricCosine
+  kmcudaDistanceMetricCosine,
+  kmcudaDistanceMetricDot
 } KMCUDADistanceMetric;
 
 #ifdef __cplusplus
@@ -180,7 +181,8 @@ const std::unordered_map<std::string, KMCUDADistanceMetric> metrics {
     {"l2", kmcudaDistanceMetricL2},
     {"cos", kmcudaDistanceMetricCosine},
     {"cosine", kmcudaDistanceMetricCosine},
-    {"angular", kmcudaDistanceMetricCosine}
+    {"angular", kmcudaDistanceMetricCosine},
+    {"dot", kmcudaDistanceMetricDot}
 };
 
 /// Mapping from KMCUDAResult to strings - useful for wrappers.
