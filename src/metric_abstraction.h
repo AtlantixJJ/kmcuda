@@ -306,29 +306,6 @@ template <typename F>
 struct METRIC<kmcudaDistanceMetricDot, F> {
   FPATTR static F sum_squares(
       const F *__restrict__ vec, F *__restrict__ cache) {
-    if (cache) {
-      #pragma unroll 4
-      for (int f = 0; f < d_features_size; f++) {
-        cache[f] = vec[f];
-      }
-    }
-    return _const<F>(1);
-  }
-
-  FPATTR static F sum_squares_t(
-      const F *__restrict__ vec, F *__restrict__ cache, uint64_t size, uint64_t index) {
-    if (cache) {
-      #pragma unroll 4
-      for (uint64_t f = 0; f < d_features_size; f++) {
-        cache[f] = vec[f * size + index];
-      }
-    }
-    return _const<F>(1);
-  }
-
-  /*
-  FPATTR static F sum_squares(
-      const F *__restrict__ vec, F *__restrict__ cache) {
     F ssqr = _const<F>(0), corr = _const<F>(0);
     #pragma unroll 4
     for (int f = 0; f < d_features_size; f++) {
@@ -360,11 +337,13 @@ struct METRIC<kmcudaDistanceMetricDot, F> {
     }
     return ssqr;
   }
-  */
 
   FPATTR static typename HALF<F>::type distance(
       F sqr1 __attribute__((unused)), F sqr2 __attribute__((unused)), F prod) {
-    return _half<F>(_float(_fin(prod)));
+    float fp = _float(_fin(prod));
+    //if (fp >= 1.f) return _half<F>(0.f);
+    //if (fp <= -1.f) return _half<F>(M_PI);
+    return _half<F>(fp);
   }
 
   FPATTR static float distance(const F *__restrict__ v1, const F *__restrict__ v2) {
@@ -377,7 +356,7 @@ struct METRIC<kmcudaDistanceMetricDot, F> {
       corr = _sub(yprod, _sub(tprod, prod));
       prod = tprod;
     }
-    return _float(_fin(prod));
+    return _float(distance(_const<F>(1), _const<F>(1), prod));
   }
 
   FPATTR static float distance_t(const F *__restrict__ v1, const F *__restrict__ v2,
@@ -391,7 +370,7 @@ struct METRIC<kmcudaDistanceMetricDot, F> {
       corr = _sub(yprod, _sub(tprod, prod));
       prod = tprod;
     }
-    return _float(_fin(prod));
+    return _float(distance(_const<F>(1), _const<F>(1), prod));
   }
 
   FPATTR static float distance_tt(const F *__restrict__ v, uint64_t size,
@@ -405,7 +384,7 @@ struct METRIC<kmcudaDistanceMetricDot, F> {
       corr = _sub(yprod, _sub(tprod, prod));
       prod = tprod;
     }
-    return _float(_fin(prod));
+    return _float(distance(_const<F>(1), _const<F>(1), prod));
   }
 
   FPATTR static float partial(const F *__restrict__ v1, const F *__restrict__ v2,
