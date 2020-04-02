@@ -98,7 +98,7 @@ static bool get_metric(PyObject *metric_obj, KMCUDADistanceMetric *metric) {
     if (immetric == kmcuda::metrics.end()) {
       PyErr_SetString(
           PyExc_ValueError,
-          "Unknown metric. Supported values are \"L2\" and \"cos\".");
+          "Unknown metric. Supported values are \"L2\", \"cos\" and \"dot\".");
       return false;
     }
     *metric = immetric->second;
